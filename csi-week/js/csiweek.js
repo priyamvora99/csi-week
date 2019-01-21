@@ -1,5 +1,40 @@
 $(document).ready(function(){
 
+  $.fn.checkStatus=function(){
+    var ref=firebase.database().ref('participants/csi_week_19/');
+    var detailsObj={};
+    var status=0;
+    var totalAmount=0;
+
+    ref.child(userId).on('value',function(snapshot){
+      var exists=(snapshot.val() !== null);
+      if(exists){
+
+        detailsObj=snapshot.val();
+        console.log(detailsObj);
+        status=detailsObj.status;
+        totalAmount=detailsObj.price;
+        if(status==0){
+          console.log("status is 0");
+            $('#eventsRegistrationContainer').hide();
+            $('#qrCodeContainer').show();
+            $('#showMoneyMessage').show();
+            $('#showMoney').text("Please pay Rs "+totalAmount+" at the desk ");
+        }else{
+            console.log("Status is 1");
+            $('#eventsRegistrationContainer').hide();
+              $('#qrCodeContainer').hide();
+             $('#tickContainer').show();
+        }
+
+      }else{
+        console.log(" does not exist");
+          $('#eventsRegistrationContainer').show();
+      }
+    });
+  }
+  $.fn.checkStatus();
+
   var isCsiMember,androidWorkshop,arvrWorkshop;
   var yearSelected,deptSelected,divisionSelected;
     var userDetails={};
@@ -30,6 +65,7 @@ $(document).ready(function(){
        isCsiMember=false;
       var isChecked=$('#csiMember:checked').prop('checked');
       if(isChecked){
+
         isCsiMember=true;
         $('.discountedRate').show();
         $('.normalRate').toggleClass('strikeText');
@@ -154,46 +190,46 @@ $(document).ready(function(){
       var phone=$('#telephone').val();
       console.log(phone);
 
-
-      var database=firebase.database().ref('participants/csi_week');
+      var isCsiMember = $('#csiMember').prop("checked");
+      var database=firebase.database().ref('participants/csi_week_19');
       database.child(userId).set({
         course_details:course_details,
-        csi_member:isCsiMember,
+        csi_member:typeof isCsiMember == undefined ? false : isCsiMember ,
         email:userDetails.email,
         name:userDetails.name,
         phone:phone,
         price:totalAmount,
         status:status
       }).then(function(){
-          var database=firebase.database().ref('participants/csi_week/'+userId);
+          var database=firebase.database().ref('participants/csi_week_19/'+userId);
           if(androidWorkshop && arvrWorkshop){
             database.child(events).set({
               0:'Android',
               1:'AR VR'
             }).then(function(){
-              window.location.assign('qrcode.php?string='+string);
+              $.fn.checkStatus();
             });
           }else if(androidWorkshop){
             database.child(events).set({
               0:'Android'
             }).then(function(){
-              window.location.assign('qrcode.php?string='+string);
+              $.fn.checkStatus();
             });
-          }else{
-            database.child(events).set({
-              0:'AR VR'
-            }).then(function(){
-              window.location.assign('qrcode.php?string='+string);
-            });
-          }
+        }else{
+          database.child(events).set({
+            0:'AR VR'
+          }).then(function(){
+            $.fn.checkStatus();
+          });
+        }
+    });
 
-      });
 
 
     });
     $('#changeMe').click(function(){
     var anObj={};
-        var ref=firebase.database().ref('participants/csi_week/'+userId);
+        var ref=firebase.database().ref('participants/csi_week_19/'+userId);
         ref.on('value',function(snapshot){
 
           var updatedData=snapshot.val();

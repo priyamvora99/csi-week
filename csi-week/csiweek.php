@@ -1,10 +1,7 @@
 <?php
-
-
-
-    if(isset($_GET["uid"])){
+  if(isset($_GET["uid"])){
     $uid=$_GET["uid"];
-    $string='participants/csi_week/'.$uid;
+    $string='participants/csi_week_19/'.$uid;
 
   }
 ?>
@@ -13,16 +10,25 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSI Week 2K19</title>
+    <title>CSI Week 2019</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.0/barcodes/JsBarcode.codabar.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.0/barcodes/JsBarcode.codabar.min.js"></script>
+    <script type="text/javascript" src="js/csiweek.js"></script>
+    <script type="text/javascript" src="js/qrcode.js"></script>
 
 
     <script>
           var userId='<?php echo $uid; ?>';
           var string='<?php echo $string; ?>';
+          // var config = {
+          //   apiKey: "AIzaSyAK4u-fDv6geisMAyAkWhELnKcPRbx6XXc",
+          //   authDomain: "djcsi-3e43d.firebaseapp.com",
+          //   databaseURL: "https://djcsi-3e43d.firebaseio.com",
+          //   projectId: "djcsi-3e43d",
+          //   storageBucket: "djcsi-3e43d.appspot.com",
+          //   messagingSenderId: "464789121303"
+          // };
           var config = {
     apiKey: "AIzaSyAtcRNZGiE-Uk0wyyUwfY8I85QWu8XmUGQ",
     authDomain: "djcsi-b13a9.firebaseapp.com",
@@ -31,13 +37,15 @@
     storageBucket: "djcsi-b13a9.appspot.com",
     messagingSenderId: "894161111425"
   };
-  
           firebase.initializeApp(config);
           function showInfoModal(){
 
           }
+
+
     </script>
-    <script type="text/javascript" src="js/csiweek.js"></script>
+
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -50,7 +58,7 @@
       <link rel="stylesheet" href="css/csiweek.css"></link>
   </head>
   <body>
-    <div class="container">
+    <div class="container" id="eventsRegistrationContainer" style="display:none;">
       <div class="row">
         <div class="col-12">
           <p >Your Details</p>
@@ -213,5 +221,59 @@
       </div>
     </div>
 </div>
-    </body>
+<div class="container" style="margin-top:50%;display:none;" id="qrCodeContainer">
+  <div class="row">
+    <div class="col-12">
+      <div class="containerDiv" id="showQr">
+        <div id="output">
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <span id="showMoney"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="container"  style="margin-top:50%;display:none;" id="tickContainer" >
+  <div class="row">
+    <div class="col-12">
+      <div class="containerDiv">
+        <div class="row">
+          <div class="col-12">
+            <img src="image1.png" class="" alt="You are registered successfully" width="250" height="250">
+          </div>
+        </div>
+        <br/>
+        <div class="row">
+          <div class="col-12">
+            <span class="" style="">Congratualtions!You are registered for the workshop(s)!</span>
+          </div>
+        </div>
+        <!-- <div class="row">
+          <div class="col-12">
+            <a href="djcsi://close_window" class="buttonClass">Go Back</a>
+            <button type="button" class="buttonClass1" name="button" id="changeMe">Refresh</button>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+      <script>
+      var qrcode = new QRCode(document.getElementById("output"), {
+        text: string,
+        width: 300,
+        height: 300,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+        });
+
+      </script>
+</body>
   </html>
