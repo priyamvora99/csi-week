@@ -24,13 +24,14 @@
           var userId='<?php echo $uid; ?>';
           var string='<?php echo $string; ?>';
           var config = {
-            apiKey: "AIzaSyAK4u-fDv6geisMAyAkWhELnKcPRbx6XXc",
-            authDomain: "djcsi-3e43d.firebaseapp.com",
-            databaseURL: "https://djcsi-3e43d.firebaseio.com",
-            projectId: "djcsi-3e43d",
-            storageBucket: "djcsi-3e43d.appspot.com",
-            messagingSenderId: "464789121303"
-          };
+    apiKey: "AIzaSyAtcRNZGiE-Uk0wyyUwfY8I85QWu8XmUGQ",
+    authDomain: "djcsi-b13a9.firebaseapp.com",
+    databaseURL: "https://djcsi-b13a9.firebaseio.com",
+    projectId: "djcsi-b13a9",
+    storageBucket: "djcsi-b13a9.appspot.com",
+    messagingSenderId: "894161111425"
+  };
+  
           firebase.initializeApp(config);
           function showInfoModal(){
 
